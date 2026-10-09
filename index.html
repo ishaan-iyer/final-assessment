@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Filter Studio</title>
+    <style>
+      :root {
+        --page-bg: #fff1e6;
+        --panel-bg: #ffffff;
+        --panel-border: rgba(17, 24, 39, 0.12);
+        --text: #1d2433;
+        --muted: #48576b;
+        --accent: #0b57d0;
+        --focus: #ffbf00;
+        --shadow: rgba(17, 24, 39, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--page-bg);
+        color: var(--text);
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      main {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem;
+      }
+
+      h1 {
+        margin: 0 0 1.25rem;
+        text-align: center;
+        font-size: clamp(2rem, 5vw, 3rem);
+        line-height: 1.1;
+      }
+
+      .app-layout {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
+
+      .panel {
+        background: var(--panel-bg);
+        border: 1px solid var(--panel-border);
+        border-radius: 16px;
+        box-shadow: 0 8px 24px var(--shadow);
+        padding: 1rem;
+      }
+
+      .image-panel {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        order: -1;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        border-radius: 12px;
+        aspect-ratio: 1;
+        object-fit: cover;
+        box-shadow: 0 10px 26px rgba(31, 43, 61, 0.16);
+      }
+
+      fieldset {
+        border: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      legend {
+        margin-bottom: 0.75rem;
+        font-weight: 700;
+        font-size: 1.1rem;
+      }
+
+      .control {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .control:last-child {
+        margin-bottom: 0;
+      }
+
+      .control-label {
+        display: block;
+        font-weight: 700;
+        text-align: center;
+      }
+
+      .control-field {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      output {
+        min-width: 4rem;
+        color: var(--muted);
+        font-weight: 700;
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+
+      input[type='range'] {
+        width: 100%;
+        accent-color: var(--accent);
+      }
+
+      input[type='range']:focus-visible {
+        outline: 3px solid var(--focus);
+        outline-offset: 4px;
+        border-radius: 999px;
+      }
+
+      @media (min-width: 600px) {
+        .control {
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          gap: 1rem;
+        }
+
+        .control-label {
+          flex: 0 0 120px;
+          text-align: right;
+        }
+
+        .control-field {
+          flex: 1;
+        }
+      }
+
+      @media (min-width: 840px) {
+        main {
+          padding: 2rem 1rem;
+        }
+
+        .app-layout {
+          grid-template-columns: 400px 400px;
+          justify-content: center;
+          align-items: start;
+          gap: 2rem;
+        }
+
+        .panel {
+          min-height: 400px;
+        }
+
+        .image-panel {
+          order: 0;
+        }
+
+        .control {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.5rem;
+        }
+
+        .control-label {
+          flex: initial;
+          width: 100%;
+          text-align: left;
+        }
+
+        .control-field {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Image Filter Studio</h1>
+
+      <div class="app-layout">
+        <section class="panel controls-panel" aria-label="Image filter controls">
+          <form>
+            <fieldset>
+              <legend>Image filters</legend>
+
+              <label class="control" for="hue">
+                <span class="control-label">Hue Rotate</span>
+                <span class="control-field">
+                  <output id="hue-output" for="hue" aria-live="polite">0°</output>
+                  <input id="hue" type="range" min="0" max="360" value="0" />
+                </span>
+              </label>
+
+              <label class="control" for="blur">
+                <span class="control-label">Blur</span>
+                <span class="control-field">
+                  <output id="blur-output" for="blur" aria-live="polite">0px</output>
+                  <input id="blur" type="range" min="0" max="40" value="0" />
+                </span>
+              </label>
+
+              <label class="control" for="contrast">
+                <span class="control-label">Contrast</span>
+                <span class="control-field">
+                  <output id="contrast-output" for="contrast" aria-live="polite">50%</output>
+                  <input id="contrast" type="range" min="0" max="400" value="50" />
+                </span>
+              </label>
+
+              <label class="control" for="saturation">
+                <span class="control-label">Saturation</span>
+                <span class="control-field">
+                  <output id="saturation-output" for="saturation" aria-live="polite">100%</output>
+                  <input id="saturation" type="range" min="0" max="200" value="100" />
+                </span>
+              </label>
+            </fieldset>
+          </form>
+        </section>
+
+        <section class="panel image-panel" aria-label="Filtered image preview">
+          <img src="./dali.png" alt="A colorful surreal painting by Salvador Dalí in a warm, abstract scene" width="400" height="400" />
+        </section>
+      </div>
+    </main>
+
+    <script>
+      const img = document.querySelector('img');
+      const filterInputs = ['hue', 'blur', 'contrast', 'saturation'];
+      const state = {
+        hue: 0,
+        blur: 0,
+        contrast: 50,
+        saturation: 100,
+      };
+
+      function formatValue(id, value) {
+        if (id === 'hue') return `${value}°`;
+        if (id === 'blur') return `${value}px`;
+        return `${value}%`;
+      }
+
+      function updateImage() {
+        const { hue, blur, contrast, saturation } = state;
+        img.style.filter = `hue-rotate(${hue}deg) blur(${blur}px) contrast(${contrast}%) saturate(${saturation}%)`;
+      }
+
+      filterInputs.forEach((id) => {
+        const input = document.getElementById(id);
+        const output = document.getElementById(`${id}-output`);
+
+        input.addEventListener('input', (event) => {
+          const value = Number(event.target.value);
+          state[id] = value;
+          output.textContent = formatValue(id, value);
+          updateImage();
+        });
+
+        output.textContent = formatValue(id, state[id]);
+      });
+
+      updateImage();
+    </script>
+  </body>
+</html>
